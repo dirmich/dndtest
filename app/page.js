@@ -1,5 +1,5 @@
 'use client'
-import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core"
+import { DndContext, pointerWithin, useDraggable, useDroppable } from "@dnd-kit/core"
 import { useState } from "react"
 
 const Draggable = ({name='a'})=>{
@@ -7,7 +7,7 @@ const Draggable = ({name='a'})=>{
     id:`draggable-${name}`
   })
   const style = transform ? {
-    transform: `translate-3d(${transform.x}px,${transform.x}px,0)`,
+    transform: `translate3d(${transform.x}px,${transform.y}px,0)`,
   } : undefined
   
   return (
@@ -43,7 +43,10 @@ const  Home=() => {
     console.log('drag end',e)
   }
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext 
+      collisionDetection={pointerWithin}
+      onDragEnd={handleDragEnd}
+    >
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-start">
         <Draggable />
         <Droppable name='1'/>        
